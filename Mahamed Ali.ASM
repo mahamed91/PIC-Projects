@@ -12,7 +12,6 @@
 #DEFINE	PAGE0	BCF	STATUS,5
 #DEFINE	PAGE1	BSF	STATUS,5
  
-
 ; Declarations
 STATUS	EQU	H'03'	
 TRISA	EQU	H'05'	
@@ -57,7 +56,7 @@ PORTS	CLRF 	PORTA		; clear ports
 ; memory bank switching for small programs.
 
 ; Time delay subroutines for fast mode.
-; onems=1ms;  tenth = 0·1s;  quart=0·25ms;  second=1s.
+; onems=1ms;  tenth = 0Â·1s;  quart=0Â·25ms;  second=1s.
 onems	MOVLW	H'0CB'
 	MOVWF	temp1
 again1 	NOP
@@ -132,12 +131,9 @@ COUNTD	MOVF	COUNT,W		; load the value of COUNT into Working register
 	RETURN			; this command is actioned only if COUNT has become
 				; zero, in which case the program jumps back to LOOP1
 
-
-
 ;************************ Main Program **************************
 
 MAIN				; start of main program
-
 
 WAIT1 	BTFSS PORTA,0		;
 	GOTO  WAIT1		;
@@ -159,7 +155,6 @@ WAIT2 	BTFSS PORTA,1		;
 	CLRF 	PORTB		; Clears the register 
 	GOTO	WAIT3
 
-
 WAIT3 	BTFSS PORTA,2		;
 	GOTO  WAIT3		;
 
@@ -170,21 +165,20 @@ WAIT3 	BTFSS PORTA,2		;
 	CLRF 	PORTB		; Clears the register 	
 	GOTO 	WAIT4
 	
-
 WAIT4 	BTFSS PORTA,3		;
 	GOTO  WAIT4		;
 
 LOOP1	MOVLW	3		; load value of 1 into Working register
 	MOVWF	PORTB		; load this value as data into Port B
-	BCF	STATUS,C		; clear Carry flag
+	BCF	STATUS,C	; clear Carry flag
 				
 LOOP2	RLF	PORTB,F		; rotate value of PORTB left by 1 logical place#
-	BTFSS	STATUS,C		; check Carry flag is set
+	BTFSS	STATUS,C	; check Carry flag is set
 	GOTO	LOOP2		; this command is actioned only if PORTB is not yet 0
 				; the program jumping back to address LOOP2
 
 LOOP3	RRF	PORTB,F		; rotate value of PORTB right by 1 logical place
-	BTFSS	STATUS,C		; check Carry flag is set
+	BTFSS	STATUS,C	; check Carry flag is set
 	GOTO	LOOP3		; this command is actioned only if PORTB is not yet 0
 				; the program jumping back to address LOOP2
 
